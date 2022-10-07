@@ -1356,6 +1356,39 @@ imadata<BYTE> imabin::detect_coin (int l, bool c_s, bool c_e) {
 /****************************************************** DEBUT A CODER *******************************************************/
 //ici
 
+	for(i=0; i<nblig; i+=){
+		for(j=0; j<nbcol; j+=){
+			imaRes(i,j)=0;
+		}
+	}
+	
+	imaCoin = erode (B1_UL) && negatif().erode(B2_UL);
+	for(i=0; i<nblig; i+=){
+		for(j=0; j<nbcol; j+=){
+			imaRes(i,j)+=imaCoin(i,j);
+		}
+	}
+	
+	imaCoin = erode (B1_UR) && negatif().erode(B2_UR);
+	for(i=0; i<nblig; i+=){
+		for(j=0; j<nbcol; j+=){
+			imaRes(i,j)+=imaCoin(i,j);
+		}
+	}
+	
+	imaCoin = erode (B1_LL) && negatif().erode(B2_LL);
+	for(i=0; i<nblig; i+=){
+		for(j=0; j<nbcol; j+=){
+			imaRes(i,j)+=imaCoin(i,j);
+		}
+	}
+	
+	imaCoin = erode (B1_LR) && negatif().erode(B2_LR);
+	for(i=0; i<nblig; i+=){
+		for(j=0; j<nbcol; j+=){
+			imaRes(i,j)+=imaCoin(i,j);
+		}
+	}
 
 
 
