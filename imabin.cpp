@@ -1355,6 +1355,8 @@ imadata<BYTE> imabin::detect_coin (int l, bool c_s, bool c_e) {
 	imabin imaCoin(nblig,nbcol);
 /****************************************************** DEBUT A CODER *******************************************************/
 //ici
+	
+	//COIN SAILLANTS
 
 	for(i=0; i<nblig; i+=){
 		for(j=0; j<nbcol; j+=){
@@ -1389,6 +1391,8 @@ imadata<BYTE> imabin::detect_coin (int l, bool c_s, bool c_e) {
 			imaRes(i,j)+=imaCoin(i,j);
 		}
 	}
+	
+	//COIN ENTRANTS : inverser B1 et B2
 
 
 
