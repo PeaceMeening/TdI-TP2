@@ -1354,7 +1354,7 @@ imadata<BYTE> imabin::detect_coin (int l, bool c_s, bool c_e) {
 	imadata<BYTE> imaRes(nblig,nbcol);
 	imabin imaCoin(nblig,nbcol);
 /****************************************************** DEBUT A CODER *******************************************************/
-
+//ici
 
 
 
