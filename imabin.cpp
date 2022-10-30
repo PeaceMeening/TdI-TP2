@@ -1354,45 +1354,302 @@ imadata<BYTE> imabin::detect_coin (int l, bool c_s, bool c_e) {
 	imadata<BYTE> imaRes(nblig,nbcol);
 	imabin imaCoin(nblig,nbcol);
 /****************************************************** DEBUT A CODER *******************************************************/
-//ici
 	
+	for(i = 0;i<l+1;i++){
+		for(j = 0;j<l+1;j++){
+			if(i==0 && j<l) B2_UL(i,j) = 1;
+			else if(j==0 && i<l) B2_UL(i,j) = 1;
+			else B2_UL(i,j) = 0;
+		}
+	}
+	for(i = 0;i<l+1;i++){
+		for(j = 0;j<l+1;j++){
+			if(i==1 && 0<j && j<l+1) B1_UL(i,j) = 1;
+			else if(j==1 && 0<i && i<l+1) B1_UL(i,j) = 1;
+			else B1_UL(i,j) = 0;
+		}
+	}
+	for(i = 0;i<l+1;i++){
+		for(j = 0;j<l+1;j++){
+			if(i==0 && j>0 && j<l+1) B2_UR(i,j) = 1;
+			else if(j==l && i<l) B2_UR(i,j) = 1;
+			else B2_UR(i,j) = 0;
+		}
+	}
+	for(i = 0;i<l+1;i++){
+		for(j = 0;j<l+1;j++){
+			if(i==1 && j<l) B1_UR(i,j) = 1;
+			else if(j==l-1 && 0<i && i<l+1) B1_UR(i,j) = 1;
+			else B1_UR(i,j) = 0;
+		}
+	}
+	for(i = 0;i<l+1;i++){
+		for(j = 0;j<l+1;j++){
+			if(i==l && j<l) B2_LL(i,j) = 1;
+			else if(j==0 && i>0 && i<l+1) B2_LL(i,j) = 1;
+			else B2_LL(i,j) = 0;
+		}
+	}
+	for(i = 0;i<l+1;i++){
+		for(j = 0;j<l+1;j++){
+			if(i==l-1 && j>0) B1_LL(i,j) = 1;
+			else if(j==1 && i<l) B1_LL(i,j) = 1;
+			else B1_LL(i,j) = 0;
+		}
+	}
+	for(i = 0;i<l+1;i++){
+		for(j = 0;j<l+1;j++){
+			if(i==l && j>0) B2_LR(i,j) = 1;
+			else if(j==l && i>0) B2_LR(i,j) = 1;
+			else B2_LR(i,j) = 0;
+		}
+	}
+	for(i = 0;i<l+1;i++){
+		for(j = 0;j<l+1;j++){
+			if(i==l-1 && j<l) B1_LR(i,j) = 1;
+			else if(j==l-1 && i<l) B1_LR(i,j) = 1;
+			else B1_LR(i,j) = 0;
+		}
+	}
+
+	//COINS NON PARRALLELES
+	//UP
+	for(i = 0;i<l+1;i++){
+		for(j = 0;j<l+1;j++){
+			if((j==(l/2-i))||(j==(l/2+i))) {
+				B2_UP(i,j) = 1;
+			}
+			else{
+				B2_UP(i,j) = 0;
+			}
+		}
+	}
+
+	for(i = 0;i<l+1;i++){
+		for(j = 0;j<l+1;j++){
+			if(((i>0)&&(j==(l/2-i+1)))||((i>0)&&(j==(l/2+i-1)))) {
+				B1_UP(i,j) = 1;
+			}
+			else{
+				B1_UP(i,j) = 0;
+			}
+		}
+	}
+
+	//DOWN
+	for(i = 0;i<l+1;i++){
+		for(j = 0;j<l+1;j++){
+			if((j==(l/2-(i-(l))))||(j==(l/2+(i-(l))))) {
+				B2_DOWN(i,j) = 1;
+			}
+			else{
+				B2_DOWN(i,j) = 0;
+			}
+		}
+	}
+
+	for(i = 0;i<l+1;i++){
+		for(j = 0;j<l+1;j++){
+			if( ((i<l) && (j==(l/2-(i-(l-1)))) ) || ((i<l) && (j==(l/2+(i-(l-1)))) )) {
+				B1_DOWN(i,j) = 1;
+			}
+			else{
+				B1_DOWN(i,j) = 0;
+			}
+		}
+	}
+
+	//LEFT
+	for(i = 0;i<l+1;i++){
+		for(j = 0;j<l+1;j++){
+			if((i==(l/2-j))||(i==(l/2+j))) {
+				B2_LEFT(i,j) = 1;
+			}
+			else{
+				B2_LEFT(i,j) = 0;
+			}
+		}
+	}
+
+	for(i = 0;i<l+1;i++){
+		for(j = 0;j<l+1;j++){
+			if(((j>0)&&(i==(l/2-j+1)))||((j>0)&&(i==(l/2+j-1)))) {
+				B1_LEFT(i,j) = 1;
+			}
+			else{
+				B1_LEFT(i,j) = 0;
+			}
+		}
+	}
+
+
+	//RIGHT
+	for(i = 0;i<l+1;i++){
+		for(j = 0;j<l+1;j++){
+			if((i==(l/2-(l-j)))||(i==(l/2+(l-j)))) {
+				B2_RIGHT(i,j) = 1;
+			}
+			else{
+				B2_RIGHT(i,j) = 0;
+			}
+		}
+	}
+
+	for(i = 0;i<l+1;i++){
+		for(j = 0;j<l+1;j++){
+			if(  B2_RIGHT(i,j) == 1 ) {
+				B1_RIGHT(i,j-1) = 1;
+			}
+			else{
+				B1_RIGHT(i,j) = 0;
+			}
+		}
+	}
+	
+	for(i = 0;i<l+1;i++){
+		for(j = 0;j<l+1;j++){
+			if(B1_RIGHT(i,j) == 1){
+				B1_RIGHT(i,j) = B1_RIGHT(i,j)-B2_RIGHT(i,j);
+			}
+		}
+	}
+
+	//( (j<l) && (i==j-l/2-1-1) )|| ( (j<l) && (i==(l/2+(l-1-j))))
+
+
+	B1_RIGHT.affiche();
+
 	//COIN SAILLANTS
 
-	for(i=0; i<nblig; i+=){
-		for(j=0; j<nbcol; j+=){
-			imaRes(i,j)=0;
+	imaRes.mise_a_zero();
+
+		imaCoin = erode (B1_UL) && negatif().erode (B2_UL);
+	for(i=0; i<nblig; i++){
+		for(j=0; j<nbcol; j++){
+			imaRes(i,j)+=(BYTE)imaCoin(i,j)*noUL;
+			if(imaCoin(i,j)){nUL++;n++;}
+		}
+	}
+	imaCoin = erode (B1_UR) && negatif().erode (B2_UR);
+	for(i=0; i<nblig; i++){
+		for(j=0; j<nbcol; j++){
+			imaRes(i,j)+=(BYTE)imaCoin(i,j)*noUR;
+			if(imaCoin(i,j)){nUR++;n++;}
+		}
+	}
+
+	imaCoin = erode (B1_LL) && negatif().erode (B2_LL);
+	for(i=0; i<nblig; i++){
+		for(j=0; j<nbcol; j++){
+			imaRes(i,j)+=(BYTE)imaCoin(i,j)*noLL;
+			if(imaCoin(i,j)){nLL++;n++;}
+		}
+	}
+	imaCoin = erode(B1_LR) && negatif().erode(B2_LR);
+	for(i=0; i<nblig; i++){
+		for(j=0; j<nbcol; j++){
+			imaRes(i,j)+=(BYTE)imaCoin(i,j)*noLR;
+			if(imaCoin(i,j)){nLR++;n++;}
 		}
 	}
 	
-	imaCoin = erode (B1_UL) && negatif().erode(B2_UL);
-	for(i=0; i<nblig; i+=){
-		for(j=0; j<nbcol; j+=){
-			imaRes(i,j)+=imaCoin(i,j);
-		}
-	}
-	
-	imaCoin = erode (B1_UR) && negatif().erode(B2_UR);
-	for(i=0; i<nblig; i+=){
-		for(j=0; j<nbcol; j+=){
-			imaRes(i,j)+=imaCoin(i,j);
-		}
-	}
-	
-	imaCoin = erode (B1_LL) && negatif().erode(B2_LL);
-	for(i=0; i<nblig; i+=){
-		for(j=0; j<nbcol; j+=){
-			imaRes(i,j)+=imaCoin(i,j);
-		}
-	}
-	
-	imaCoin = erode (B1_LR) && negatif().erode(B2_LR);
-	for(i=0; i<nblig; i+=){
-		for(j=0; j<nbcol; j+=){
-			imaRes(i,j)+=imaCoin(i,j);
-		}
-	}
 	
 	//COIN ENTRANTS : inverser B1 et B2
+
+		imaCoin = erode (B2_UL) && negatif().erode (B1_UL);
+	for(i=0; i<nblig; i++){
+		for(j=0; j<nbcol; j++){
+			imaRes(i,j)+=(BYTE)imaCoin(i,j)*moUL;
+			if(imaCoin(i,j)){mUL++;m++;}
+		}
+	}
+	imaCoin = erode (B2_UR) && negatif().erode (B1_UR);
+	for(i=0; i<nblig; i++){
+		for(j=0; j<nbcol; j++){
+			imaRes(i,j)+=(BYTE)imaCoin(i,j)*moUR;
+			if(imaCoin(i,j)){mUR++;m++;}
+		}
+	}
+	imaCoin = erode (B2_LL) && negatif().erode (B1_LL);
+	for(i=0; i<nblig; i++){
+		for(j=0; j<nbcol; j++){
+			imaRes(i,j)+=(BYTE)imaCoin(i,j)*moLL;
+			if(imaCoin(i,j)){mLL++;m++;}
+		}
+	}
+	imaCoin = erode(B2_LR) && negatif().erode(B1_LR);
+	for(i=0; i<nblig; i++){
+		for(j=0; j<nbcol; j++){
+			imaRes(i,j)+=(BYTE)imaCoin(i,j)*moLR;
+			if(imaCoin(i,j)){mLR++;m++;}
+		}
+	}
+
+		imaRes.mise_a_zero();
+
+	imaCoin = erode (B1_UP) && negatif().erode (B2_UP);
+	for(i=0; i<nblig; i++){
+		for(j=0; j<nbcol; j++){
+			imaRes(i,j)+=(BYTE)imaCoin(i,j)*noUL;
+			if(imaCoin(i,j)){nUL++;n++;}
+		}
+	}
+	imaCoin = erode (B1_DOWN) && negatif().erode (B2_DOWN);
+	for(i=0; i<nblig; i++){
+		for(j=0; j<nbcol; j++){
+			imaRes(i,j)+=(BYTE)imaCoin(i,j)*noUR;
+			if(imaCoin(i,j)){nUR++;n++;}
+		}
+	}
+
+	imaCoin = erode (B1_LEFT) && negatif().erode (B2_LEFT);
+	for(i=0; i<nblig; i++){
+		for(j=0; j<nbcol; j++){
+			imaRes(i,j)+=(BYTE)imaCoin(i,j)*noLL;
+			if(imaCoin(i,j)){nLL++;n++;}
+		}
+	}
+	imaCoin = erode(B1_RIGHT) && negatif().erode(B2_RIGHT);
+	for(i=0; i<nblig; i++){
+		for(j=0; j<nbcol; j++){
+			imaRes(i,j)+=(BYTE)imaCoin(i,j)*noLR;
+			if(imaCoin(i,j)){nLR++;n++;}
+		}
+	}
+	
+	
+	//COIN ENTRANTS : inverser B1 et B2
+
+		imaCoin = erode (B2_UP) && negatif().erode (B1_UP);
+	for(i=0; i<nblig; i++){
+		for(j=0; j<nbcol; j++){
+			imaRes(i,j)+=(BYTE)imaCoin(i,j)*moUL;
+			if(imaCoin(i,j)){mUL++;m++;}
+		}
+	}
+	imaCoin = erode (B2_DOWN) && negatif().erode (B1_DOWN);
+	for(i=0; i<nblig; i++){
+		for(j=0; j<nbcol; j++){
+			imaRes(i,j)+=(BYTE)imaCoin(i,j)*moUR;
+			if(imaCoin(i,j)){mUR++;m++;}
+		}
+	}
+	imaCoin = erode (B2_LEFT) && negatif().erode (B1_LEFT);
+	for(i=0; i<nblig; i++){
+		for(j=0; j<nbcol; j++){
+			imaRes(i,j)+=(BYTE)imaCoin(i,j)*moLL;
+			if(imaCoin(i,j)){mLL++;m++;}
+		}
+	}
+	imaCoin = erode(B2_RIGHT) && negatif().erode(B1_RIGHT);
+	for(i=0; i<nblig; i++){
+		for(j=0; j<nbcol; j++){
+			imaRes(i,j)+=(BYTE)imaCoin(i,j)*moLR;
+			if(imaCoin(i,j)){mLR++;m++;}
+		}
+	}
+	
+	imaRes.imaunsignedchar().sauve_ImaPGM("ima_coin.pgm");
 
 
 
